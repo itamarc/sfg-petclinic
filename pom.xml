@@ -4,7 +4,7 @@
 
 	<groupId>guru.springframework</groupId>
 	<artifactId>sfg-petclinic</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 
     <packaging>pom</packaging>
     <modules>
@@ -48,8 +48,6 @@
 	</build>
 
 	<scm>
-		<url>https://github.com/itamarc/sfg-petclinic.git</url>
 		<developerConnection>scm:git:git@github.com:itamarc/sfg-petclinic.git</developerConnection>
-	  <tag>sfg-petclinic-0.0.1</tag>
   </scm>
 </project>
