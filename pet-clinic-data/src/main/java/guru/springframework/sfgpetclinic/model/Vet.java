@@ -1,12 +1,10 @@
 package guru.springframework.sfgpetclinic.model;
 
-import jdk.jfr.Enabled;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Enabled
+@Entity
 @Table(name = "vets")
 public class Vet extends Person {
     @ManyToMany(fetch = FetchType.EAGER)
