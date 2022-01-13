@@ -21,5 +21,6 @@ public class Vet extends Person {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "vets_specialities", joinColumns = @JoinColumn(name = "vet_id"),
             inverseJoinColumns = @JoinColumn(name = "speciality_id"))
+            @Builder.Default
     private Set<Speciality> specialities = new HashSet<>();
 }
