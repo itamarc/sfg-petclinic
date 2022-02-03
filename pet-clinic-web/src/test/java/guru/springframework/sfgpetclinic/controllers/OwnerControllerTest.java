@@ -2,7 +2,9 @@ package guru.springframework.sfgpetclinic.controllers;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -46,15 +48,6 @@ public class OwnerControllerTest {
     }
 
     @Test
-    void findOwners() throws Exception {
-        mockMvc.perform(get("/owners/find"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("notimplemented"));
-
-            verifyNoInteractions(ownerService);
-    }
-
-    @Test
     void listOwners() throws Exception {
         when(ownerService.findAll()).thenReturn(owners);
 
@@ -72,6 +65,36 @@ public class OwnerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/index"))
                 .andExpect(model().attribute("owners", hasSize(2)));
+    }
+
+    @Test
+    void findOwners() throws Exception {
+        mockMvc.perform(get("/owners/find"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("owners/findOwners"))
+                .andExpect(model().attributeExists("owner"));
+
+        verifyNoInteractions(ownerService);
+    }
+
+    @Test
+    void processFindFormReturnMany() throws Exception {
+        when(ownerService.findAllByLastNameLike(anyString())).thenReturn(owners.stream().toList());
+
+        mockMvc.perform(get("/owners/search"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("owners/ownersList"))
+                .andExpect(model().attribute("listOwners", hasSize(2)));
+    }
+
+    @Test
+    void processFindFormReturnOne() throws Exception {
+        when(ownerService.findAllByLastNameLike(anyString())).thenReturn(Arrays.asList(owner1));
+
+        mockMvc.perform(get("/owners/search"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/owners/1"))
+                .andExpect(model().attributeExists());
     }
 
     @Test
