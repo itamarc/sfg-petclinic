@@ -114,8 +114,7 @@ public class OwnerControllerTest {
         mockMvc.perform(get("/owners/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/createOrUpdateOwnerForm"))
-                .andExpect(model().attributeExists("owner"))
-                .andExpect(model().attributeExists("newOwner"));
+                .andExpect(model().attributeExists("owner"));
 
         verifyNoInteractions(ownerService);
     }
