@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +14,6 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Table(name = "pets")
 public class Pet extends BaseEntity {
     @Column(name = "name")
@@ -34,8 +31,19 @@ public class Pet extends BaseEntity {
     private LocalDate birthDate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
-    @Builder.Default
     private Set<Visit> visits = new HashSet<>();
+
+    @Builder
+    public Pet(Long id, String name, PetType petType, Owner owner, LocalDate birthDate, Set<Visit> visits) {
+        super(id);
+        this.name = name;
+        this.petType = petType;
+        this.owner = owner;
+        this.birthDate = birthDate;
+        if (visits != null) {
+            this.visits = visits;
+        }
+    }
 
     @Override
     public String toString() {
