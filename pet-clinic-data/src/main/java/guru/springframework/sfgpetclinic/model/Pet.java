@@ -49,4 +49,9 @@ public class Pet extends BaseEntity {
     public String toString() {
         return name + " (" + petType + "), birth date: " + birthDate;
     }
+
+    public void addVisit(Visit visit) {
+        visits.add(visit);
+        visit.setPet(this);
+    }
 }
